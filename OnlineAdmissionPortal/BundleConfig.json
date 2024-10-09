@@ -1,0 +1,28 @@
+[
+  {
+    "outputFileName": "wwwroot/css/pagination.min.css",
+    "inputFiles": [
+      "wwwroot/css/pagination.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/jsBundle/apps-js-bundle.js",
+    "inputFiles": [
+      "wwwroot/lib/angular/angular.js",
+      "wwwroot/lib/angular/angular-animate.js",
+      "wwwroot/lib/angular/angular-cookies.js",
+      "wwwroot/lib/angular/angular-loader.js",
+      "wwwroot/lib/angular/angular-resource.js",
+      "wwwroot/lib/angular/angular-route.js",
+      "wwwroot/lib/angular/angular-sanitize.js",
+      "wwwroot/lib/angular/angular-scenario.js",
+      "wwwroot/js/app.js",
+      "wwwroot/js/controllers/userCtrl.js",
+      "wwwroot/js/directives/paging.js",
+      "wwwroot/js/filters/ocxDate.js",
+      "wwwroot/js/filters/ocxDateTime.js",
+      "wwwroot/js/services/userService.js"
+    ],
+    "minify": { "enabled": false }
+  }
+]
