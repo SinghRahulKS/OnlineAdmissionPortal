@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Student
 {
-    public class Student : BaseEntity
+    public class StudentInfo : BaseEntity
     {
         public int Id { get; set; }
         public string? FName { get; set; }

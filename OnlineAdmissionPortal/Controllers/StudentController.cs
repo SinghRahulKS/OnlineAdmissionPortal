@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Entity.Student;
 using Microsoft.AspNetCore.Mvc;
 using OnlineAdmissionPortal.Models;
 using OnlineAdmissionPortal.Services.Student;
@@ -21,16 +22,20 @@ namespace OnlineAdmissionPortal.Controllers
 
         public IActionResult GetStudents(StudentModel model)
         { 
-           // var student = _mapper.Map<Student>(model);
-            //var resp = _studentService.GetStudents(student);
+           var student = _mapper.Map<StudentInfo>(model);
+           var resp = _studentService.GetStudents(student);
             return View();
         }
-        public IActionResult StudentDetails()
-        { 
+        public IActionResult StudentDetails(int id)
+        {
+            var resp = _studentService.GetStudentDetails(id);
             return View();
         }
         public IActionResult RegisterStudent(StudentModel model) 
         {
+            var student = _mapper.Map<StudentInfo>(model);
+            var resp = _studentService.RegisterStudent(student);
+            return View();
             return Json(model);
         }
     }

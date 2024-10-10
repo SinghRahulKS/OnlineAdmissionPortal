@@ -16,5 +16,6 @@ namespace Entity.Common
         public const string procGetAspNetUsers = "procGetAspNetUsers";
         public const string procDeleteUser = "procDeleteUser";
         public const string procUpdateUserInfo = "procUpdateUserInfo";
+        public const string procGetUserDetail = "procGetUserDetail";
     }
 }

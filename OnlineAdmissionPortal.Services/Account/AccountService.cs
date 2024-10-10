@@ -20,7 +20,37 @@ namespace OnlineAdmissionPortal.Services.Account
 
         public ApplicationUser GetUserDetail(Guid id)
         {
-            throw new NotImplementedException();
+            var user = new ApplicationUser();
+            DynamicParameters dbParams = new DynamicParameters();
+            dbParams.AddDynamicParams(
+            new
+            {
+                @Id = id
+            });
+            var dbResponse = _dapperRepository.Get<ApplicationUser>(DBProcedures.procGetUserDetail, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            if (dbResponse != null)
+            {
+                user = dbResponse;
+            }
+            return user;
+        }
+        public BoolResponse DeleteUser(string id)
+        {
+            var resp = new BoolResponse(); 
+            DynamicParameters dbParams = new DynamicParameters();
+            dbParams.AddDynamicParams(
+            new
+            {
+                    @Id = id
+            });
+            var dbResponse = _dapperRepository.Update<BoolResponse>(DBProcedures.procDeleteUser, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            if (dbResponse != null)
+            {
+                resp.RecordId = dbResponse.RecordId;
+                resp.IsValid = dbResponse.IsValid;
+                resp.Message = dbResponse.Message;
+            }
+            return resp;
         }
 
         public List<ApplicationUser> GetUsers(ApplicationUser user)
@@ -36,9 +66,13 @@ namespace OnlineAdmissionPortal.Services.Account
                 @CurrentPage = user.CurrentPage,
                 @PageSize = user.PageSize
             });
-            users = _dapperRepository.GetAll<ApplicationUser>(DBProcedures.procGetAspNetUsers, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            var dbResponse = _dapperRepository.GetAll<ApplicationUser>(DBProcedures.procGetAspNetUsers, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            if (dbResponse != null)
+            {
+                users = dbResponse;
+            }
             return users;
-           
+
         }
     }
 }
