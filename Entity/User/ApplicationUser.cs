@@ -5,7 +5,13 @@ namespace Entity.User
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public string? UserId { get; set; }
         public string? RoleName { get; set; }
+        public string? RoleId { get; set; }
+        public string? UserName { get; set; }
+        public string? Email { get; set; }
+        public string? PasswordHash { get; set; }
+        public string? EmailConfirmed { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public string? CreatedBy { get; set; }
