@@ -1,10 +1,10 @@
 ﻿angular.module('pageApp', ['bw.paging']);
 angular.module('app').requires.push('pageApp');
 app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
-        $scope.selectedUser = {};
-        $scope.userFilter = {};
-        $scope.userRecordIds = [];
-  
+    $scope.selectedUser = {};
+    $scope.userFilter = {};
+    $scope.userRecordIds = [];
+
     //Getting users
     $scope.getUsers = function (filter) {
         userData.getUsers(filter).then(function (resp) {

@@ -44839,10 +44839,10 @@ var app = angular.module('app', ['bw.paging']);
 angular.module('pageApp', ['bw.paging']);
 angular.module('app').requires.push('pageApp');
 app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
-        $scope.selectedUser = {};
-        $scope.userFilter = {};
-        $scope.userRecordIds = [];
-  
+    $scope.selectedUser = {};
+    $scope.userFilter = {};
+    $scope.userRecordIds = [];
+
     //Getting users
     $scope.getUsers = function (filter) {
         userData.getUsers(filter).then(function (resp) {
@@ -45456,7 +45456,7 @@ angular.module('bw.paging', []).directive('paging', function () {
 app.factory('userData', ['$http', function ($http) {
     var service =
     {
-     
+
         getUsers: function (model) {
             return $http.post('/account/getUsers/', model).then(function (data) {
                 return data;

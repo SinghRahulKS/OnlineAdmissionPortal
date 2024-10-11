@@ -1,7 +1,7 @@
 ﻿app.factory('userData', ['$http', function ($http) {
     var service =
     {
-     
+
         getUsers: function (model) {
             return $http.post('/account/getUsers/', model).then(function (data) {
                 return data;

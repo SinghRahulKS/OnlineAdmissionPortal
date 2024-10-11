@@ -21,7 +21,7 @@
       "wwwroot/js/directives/paging.js",
       "wwwroot/js/filters/ocxDate.js",
       "wwwroot/js/filters/ocxDateTime.js",
-      "wwwroot/js/services/userService.js"
+      "wwwroot/js/services/userData.js"
     ],
     "minify": { "enabled": false }
   }
