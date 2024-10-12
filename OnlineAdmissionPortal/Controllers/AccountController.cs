@@ -42,7 +42,7 @@ namespace OnlineAdmissionPortal.Controllers
             List<UserModel> users = new List<UserModel>();
             model.PageSize = model.PageSize == 0 ? _configuration.GetValue<int>("Pagination:PageSize") : model.PageSize;
             model.CurrentPage = model.CurrentPage == 0 ? 1 : model.CurrentPage;
-            var user = _mapper.Map<ApplicationUser>(model);
+            var user = _mapper.Map<User>(model);
             var resp = _accountService.GetUsers(user);
             users = _mapper.Map<List<UserModel>>(resp);
             _logger.LogInformation("Error processing GetUser: Page Number : {ExceptionMessage},UserName:  {UserName}", model.CurrentPage, User.Identity?.Name);

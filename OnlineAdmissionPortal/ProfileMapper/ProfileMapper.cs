@@ -8,7 +8,7 @@ namespace OnlineAdmissionPortal.ProfileMapper
     {
         public ProfileMapper()
         {
-            CreateMap<UserModel, ApplicationUser>().ReverseMap();
+            CreateMap<UserModel, User>().ReverseMap();
         }
     }
 }

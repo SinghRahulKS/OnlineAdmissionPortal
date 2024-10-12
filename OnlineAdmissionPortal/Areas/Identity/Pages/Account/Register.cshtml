@@ -1,0 +1,95 @@
+﻿@page
+@using OnlineAdmissionPortal.Areas.Identity.Pages;
+@using OnlineAdmissionPortal.Models;
+@model RegisterModel
+@{
+    ViewData["Title"] = "New User";
+}
+<div class="row justify-content-center">
+    <div class="modal-dialog w-50" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h4>User Registration</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <!--Form Starts here-->
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" ng-init="getRoles()">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="row g-0">
+                                <div class="col-4 align-self-center">
+                                    <label class="text-center fw-bold">First Name</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-floating my-2">
+                                        <input asp-for="Input.FirstName" class="form-control form-control-lg" placeholder="First Name" autocomplete="username" aria-required="true" />
+                                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-4 align-self-center">
+                                    <label class="text-start fw-bold">Last Name</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-floating my-2">
+                                        <input asp-for="Input.LastName" class="form-control form-control-lg" placeholder="Last Name" autocomplete="username" aria-required="true" />
+                                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-4 align-self-center">
+                                    <label class="text-start fw-bold">Email</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-floating my-2">
+                                        <input asp-for="Input.Email" type="email" class="form-control form-control-lg" id="inputEmail" placeholder="Enter your email" aria-required="true" />
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-4 align-self-center">
+                                    <label class="text-start fw-bold">Role</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="my-2">
+                                        <select asp-for="Input.RoleName" class="form-control" aria-required="true">
+                                            <option value="" disabled selected hidden>Select Role</option>
+                                            @foreach (var item in Html.GetEnumSelectList<Role>())
+                                            {
+                                                <option value="@item.Text.ToString()">@item.Text.ToString()</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="Input.RoleName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-4 align-self-center">
+                                    <label class="text-start fw-bold">Password</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-outline my-2">
+                                        <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="username" aria-required="true" />
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-4 align-self-center">
+                                    <label class="text-start fw-bold">Confirm Password</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-floating my-2">
+                                        <input asp-for="Input.ConfirmPassword" class="form-control form-control-lg" autocomplete="username" aria-required="true" />
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="modal-footer text-center">
+                                    <button id="registerSubmit my-2" type="submit" class="w-50 btn btn-primary btn-lg btn-block">Sign Up</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

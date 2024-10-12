@@ -18,16 +18,16 @@ namespace OnlineAdmissionPortal.Services.Account
             _dapperRepository = dapperRepository; 
         }
 
-        public ApplicationUser GetUserDetail(Guid id)
+        public User GetUserDetail(Guid id)
         {
-            var user = new ApplicationUser();
+            var user = new User();
             DynamicParameters dbParams = new DynamicParameters();
             dbParams.AddDynamicParams(
             new
             {
                 @Id = id
             });
-            var dbResponse = _dapperRepository.Get<ApplicationUser>(DBProcedures.procGetUserDetail, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            var dbResponse = _dapperRepository.Get<User>(DBProcedures.procGetUserDetail, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
             if (dbResponse != null)
             {
                 user = dbResponse;
@@ -53,9 +53,9 @@ namespace OnlineAdmissionPortal.Services.Account
             return resp;
         }
 
-        public List<ApplicationUser> GetUsers(ApplicationUser user)
+        public List<User> GetUsers(User user)
         {
-            var users = new List<ApplicationUser>();
+            var users = new List<User>();
             DynamicParameters dbParams = new DynamicParameters();
             dbParams.AddDynamicParams(new
             {
@@ -66,7 +66,7 @@ namespace OnlineAdmissionPortal.Services.Account
                 @CurrentPage = user.CurrentPage,
                 @PageSize = user.PageSize
             });
-            var dbResponse = _dapperRepository.GetAll<ApplicationUser>(DBProcedures.procGetAspNetUsers, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            var dbResponse = _dapperRepository.GetAll<User>(DBProcedures.procGetAspNetUsers, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
             if (dbResponse != null)
             {
                 users = dbResponse;

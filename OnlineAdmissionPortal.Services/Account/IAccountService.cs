@@ -9,7 +9,7 @@ namespace OnlineAdmissionPortal.Services.Account
 {
     public interface IAccountService
     {
-        public List<ApplicationUser> GetUsers(ApplicationUser user);
-        public ApplicationUser GetUserDetail(Guid id);
+        public List<User> GetUsers(User user);
+        public User GetUserDetail(Guid id);
     }
 }
