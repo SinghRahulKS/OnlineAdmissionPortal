@@ -1,5 +1,8 @@
-﻿using Entity.Common;
+﻿using Dapper;
+using DataContext.Repository.Dapper;
+using Entity.Common;
 using Entity.Student;
+using Entity.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +13,51 @@ namespace OnlineAdmissionPortal.Services.Student
 {
     public class StudentService : IStudentService
     {
+        private readonly IDapperRepository _dapperRepository;
+        public StudentService(IDapperRepository dapperRepository)
+        {
+            _dapperRepository = dapperRepository;
+        }
         public StudentInfo GetStudentDetails(int id)
         {
-            throw new NotImplementedException();
+            var studentInfo = new StudentInfo();
+            DynamicParameters dbParams = new DynamicParameters();
+            dbParams.Add("id", id);
+            studentInfo =  _dapperRepository.Get<StudentInfo>(DBProcedures.procDeleteUser, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            return studentInfo;
         }
 
         public List<StudentInfo> GetStudents(StudentInfo student)
         {
-            throw new NotImplementedException();
+            var studentInfos = new List<StudentInfo>();
+            DynamicParameters dbParams = new DynamicParameters();
+            dbParams.AddDynamicParams(new
+            {
+                @FirstName = student.FName,
+                @LastName = student.LName,
+                @Email = student.Email,
+                @PhoneNo = student.Phone
+            });
+            studentInfos = _dapperRepository.GetAll<StudentInfo>(DBProcedures.procGetAspNetUsers, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            return studentInfos;
+
         }
 
         public BoolResponse RegisterStudent(StudentInfo student)
         {
-            throw new NotImplementedException();
+            var resp = new BoolResponse();
+            DynamicParameters dbParams = new DynamicParameters();
+            dbParams.AddDynamicParams(new
+            {
+                @FirstName = student.FName,
+                @LastName = student.LName,
+                @Email = student.Email,
+                @PhoneNo = student.Phone,
+                @DateOfBirth = student.DateOfBirth,
+                @Address = student.Address
+            });
+            resp = _dapperRepository.Insert<BoolResponse>(DBProcedures.procGetAspNetUsers, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            return resp;
         }
     }
 }

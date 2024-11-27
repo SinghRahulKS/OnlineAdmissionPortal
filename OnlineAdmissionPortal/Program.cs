@@ -25,14 +25,14 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(05);
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.Name = ".AspNetCore.Identity.OnlineAdmissionPortal";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(05);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     options.SlidingExpiration = true;
     options.LoginPath = "/Identity/Account/Login";
 });
@@ -55,9 +55,11 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
-
+app.UseRouting(); 
+app.UseAuthentication(); // if using authentication
 app.UseAuthorization();
+// Add session before routing
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

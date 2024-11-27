@@ -14,5 +14,12 @@ namespace Entity.Enums
             Admin,
             SuperAdmin
         }
+        public enum InstituteType
+        {
+            School,
+            College,
+            University
+        }
+
     }
 }

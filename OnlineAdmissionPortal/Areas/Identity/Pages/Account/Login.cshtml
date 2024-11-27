@@ -1,5 +1,6 @@
 ﻿@page
 @using OnlineAdmissionPortal.Areas.Identity.Pages;
+@using OnlineAdmissionPortal.Models;
 @model LoginModel
 @{
     ViewData["Title"] = "Log in";
@@ -13,7 +14,8 @@
                     <h4>Sign In<span> <i class="fa fa-user" aria-hidden="true"></i></span></h4>
                 </div>
                 <div class="card-body">
-                    <form id="account" method="post">
+                    <form id="account" method="post" asp-page="/Account/Login">
+                        @Html.AntiForgeryToken()
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="mb-3">
                             <label for="inputEmail" class="form-label">Email address</label>

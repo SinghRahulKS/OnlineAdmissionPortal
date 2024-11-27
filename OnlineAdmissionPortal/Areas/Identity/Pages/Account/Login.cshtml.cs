@@ -15,17 +15,20 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace OnlineAdmissionPortal.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -110,12 +113,27 @@ namespace OnlineAdmissionPortal.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User does not exist.");
+                    return Page();
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    var claimsIdentity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName + " " + user.LastName));
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, user.RoleName));
+                    await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
+                        new ClaimsPrincipal(claimsIdentity));
+                    HttpContext.Session.SetString("FirstName", user.FirstName);
+                    HttpContext.Session.SetString("LastName", user.LastName);
+                    _logger.LogInformation("{User} logged in.", user.FirstName + "  " + user.LastName);
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

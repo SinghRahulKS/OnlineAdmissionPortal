@@ -97,6 +97,8 @@ namespace OnlineAdmissionPortal.Areas.Identity.Pages.Account
             [StringLength(55, ErrorMessage = "The Email length can't be more than {0} characters.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+           
             [Required]
             public string RoleName { get; set; }
 
@@ -149,7 +151,7 @@ namespace OnlineAdmissionPortal.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    var defaultrole = _roleManager.FindByNameAsync(Input.RoleName.ToString()).Result;
+                    var defaultrole = _roleManager.FindByNameAsync(user.RoleName).Result;
                     if (defaultrole != null)
                     {
                         IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
