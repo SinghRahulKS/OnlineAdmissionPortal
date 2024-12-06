@@ -31,6 +31,10 @@ namespace OnlineAdmissionPortal.Controllers
             var resp = _studentService.GetStudentDetails(id);
             return View();
         }
+        public ActionResult Create()
+        {
+            return View();
+        }
         public IActionResult RegisterStudent(StudentModel model) 
         {
             var student = _mapper.Map<StudentInfo>(model);

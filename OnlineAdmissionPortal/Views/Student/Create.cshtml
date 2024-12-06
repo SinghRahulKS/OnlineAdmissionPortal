@@ -1,0 +1,51 @@
+﻿@model OnlineAdmissionPortal.Models.StudentModel
+@{
+    ViewData["Title"] = "New Student";
+}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header text-center bg-primary text-white">
+                <h4 class="mb-0">Student Registration</h4>
+            </div>
+            <div class="card-body">
+                <!-- Form Starts Here -->
+                <form id="registerForm" asp-action="RegisterStudent" method="post" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <div class="mb-3">
+                        <label asp-for="FName" class="form-label fw-bold">First Name</label>
+                        <input asp-for="FName" class="form-control" placeholder="Enter first name" aria-required="true" />
+                        <span asp-validation-for="FName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="LName" class="form-label fw-bold">Last Name</label>
+                        <input asp-for="LName" class="form-control" placeholder="Enter last name" aria-required="true" />
+                        <span asp-validation-for="LName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label fw-bold">Email</label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email" aria-required="true" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Phone" class="form-label fw-bold">Phone No.</label>
+                        <input asp-for="Phone" type="tel" class="form-control" placeholder="Enter phone number" maxlength="10" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label fw-bold">Address</label>
+                        <textarea asp-for="Address" class="form-control" placeholder="Enter your address" rows="3"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg w-100">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

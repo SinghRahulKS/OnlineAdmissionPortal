@@ -1,4 +1,5 @@
-﻿using Entity.Institute;
+﻿using Entity.Common;
+using Entity.Institute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace OnlineAdmissionPortal.Services.Institution
 {
     public interface IInstitutionService
     {
-        object RegisterInstitute(Institute institute);
+        BoolResponse RegisterInstitute(Institute institute);
+        List<Institute> GetInstituteList(Institute institute);
     }
 }

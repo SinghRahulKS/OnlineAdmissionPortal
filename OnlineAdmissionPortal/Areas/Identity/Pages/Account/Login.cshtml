@@ -6,37 +6,47 @@
     ViewData["Title"] = "Log in";
 }
 <link href="~/css/loginstyle.css" rel="stylesheet" />
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h4>Sign In<span> <i class="fa fa-user" aria-hidden="true"></i></span></h4>
+            <div class="card shadow">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4>Sign In <i class="fa fa-user ms-2" aria-hidden="true"></i></h4>
                 </div>
                 <div class="card-body">
                     <form id="account" method="post" asp-page="/Account/Login">
                         @Html.AntiForgeryToken()
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- Email Field -->
                         <div class="mb-3">
-                            <label for="inputEmail" class="form-label">Email address</label>
+                            <label asp-for="Input.Email" class="form-label">Email Address</label>
                             <div class="input-group">
-                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                                <input asp-for="Input.Email" type="email" class="form-control" id="inputEmail" placeholder="Enter your email" autocomplete="username" aria-required="true" aria-describedby="basic-addon1" />
+                                <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                                <input asp-for="Input.Email" type="email" class="form-control" placeholder="Enter your email" autocomplete="username" aria-required="true" />
                             </div>
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
-                            @* <span class="input-group-text" id="basic-addon1"> <i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">*@
                         </div>
+
+                        <!-- Password Field -->
                         <div class="mb-3">
-                            <label for="inputPassword" class="form-label">Password</label>
+                            <label asp-for="Input.Password" class="form-label">Password</label>
                             <div class="input-group">
-                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-key" aria-hidden="true"></i></span>
-                                <input asp-for="Input.Password" type="password" class="form-control" id="inputPassword" placeholder="Enter your password" autocomplete="current-password" aria-required="true" aria-describedby="basic-addon2" />
+                                <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter your password" autocomplete="current-password" aria-required="true" />
                             </div>
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
-                        <button id="login-submit" class="w-100 btn btn-info btn-lg btn-block" type="submit">Login</button>
+
+                        <!-- Login Button -->
+                        <button id="login-submit" class="btn btn-primary btn-lg w-100" type="submit">Login</button>
                     </form>
+                </div>
+                <div class="card-footer text-center">
+                    <small class="text-muted">
+                        Don't have an account? <a href="/Account/Register" class="text-decoration-none">Register here</a>
+                    </small>
                 </div>
             </div>
         </div>

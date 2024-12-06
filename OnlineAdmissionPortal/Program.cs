@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineAdmissionPortal.Data;
 using OnlineAdmissionPortal.Services.Account;
+using OnlineAdmissionPortal.Services.Institution;
+using OnlineAdmissionPortal.Services.Student;
 
 var builder = WebApplication.CreateBuilder(args); 
 builder.Services.Configure<IISServerOptions>(options =>
@@ -13,6 +15,8 @@ builder.Services.Configure<IISServerOptions>(options =>
 // Add services to the container.
 builder.Services.AddScoped<IDapperRepository, DapperRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IInstitutionService, InstitutionService>();
 var connectionString = builder.Configuration.GetConnectionString("OnlineAdmissionConnectionString") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<OnlineAdmissionPortalContext>(options =>
     options.UseSqlServer(connectionString));
