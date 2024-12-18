@@ -2,6 +2,7 @@
 angular.module('app').requires.push('pageApp');
 app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
     $scope.selectedUser = {};
+    $scope.userDetails = {};
     $scope.userFilter = {};
     $scope.userRecordIds = [];
 
@@ -32,14 +33,14 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
     };
 
     //Selecting User details for deleting records
-    $scope.userDelete = function (userId) {
+    $scope.userDelete = function (resUser) {
         $("#deleteMember").modal("show");
-        $scope.userId = userId;
+        $scope.resUser = resUser;
     };
 
     //Deleting User
-    $scope.deleteUser = function () {
-        userData.deleteUser($scope.userId).then(function (result) {
+    $scope.deleteUser = function (userId) {
+        userData.deleteUser(userId).then(function (result) {
             $scope.data = result.data;
             $scope.message = $scope.data.message;
             $scope.isValid = result.data.isValid;
@@ -50,7 +51,6 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
 
     //Selecting User details for editing records
     $scope.userEdit = function (item) {
-        $scope.userDetails = {};
         angular.extend($scope.userDetails, item);
         $("#editMember").modal("show");
     };

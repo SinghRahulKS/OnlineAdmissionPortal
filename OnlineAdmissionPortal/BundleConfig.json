@@ -18,10 +18,10 @@
       "wwwroot/lib/angular/angular-scenario.js",
       "wwwroot/js/app.js",
       "wwwroot/js/controllers/userCtrl.js",
+      "wwwroot/js/controllers/admissionCtrl.js",
       "wwwroot/js/directives/paging.js",
-      "wwwroot/js/filters/ocxDate.js",
-      "wwwroot/js/filters/ocxDateTime.js",
-      "wwwroot/js/services/userData.js"
+      "wwwroot/js/services/userData.js",
+      "wwwroot/js/services/admissionData.js"
     ],
     "minify": { "enabled": false }
   }

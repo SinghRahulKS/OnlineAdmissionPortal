@@ -1,7 +1,7 @@
 ﻿
 @model IEnumerable<OnlineAdmissionPortal.Models.StudentModel>
 @inject IConfiguration _config
-<div ng-controller="admissionCtrl">
+<div class="container my-4" ng-controller="admissionCtrl">
     <div class="row pt-4">
         <div class="col-6 d-flex">
             <p class="text-primary" ng-click="getStudents(student)"><i class="fa-solid fa-user"></i> Students</p>
@@ -47,29 +47,40 @@
                         @Html.DisplayNameFor(m => m.Phone)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(m => m.DateOfBirth)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(m => m.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.CreatedBy)
                     </th>
                     <th>
                         <p>Action</p>
                     </th>
                 </tr>
 
-                <tr ng-repeat="student in userList track by $index">
+                <tr ng-repeat="student in studentList track by $index">
                     <td ng-bind="student.fName"></td>
                     <td ng-bind="student.lName"></td>
                     <td ng-bind="student.email"></td>
                     <td ng-bind="student.phone"></td>
+                    <td>
+                        <!-- Display formatted DateOfBirth -->
+                        <span>{{ student.dateOfBirth | date:'yyyy-MM-dd' }}</span>
+                    </td>
                     <td ng-bind="student.address"></td>
                     <td>
                         <a class="text-success ms-sm-2 m-1" data-bs-target="#editMember" ng-click="studentEdit(student)" title="Edit Student">
                             <i class="fa fa-edit"></i>
                         </a>
                         <a class="text-danger ms-sm-2 m-1" data-bs-target="#deleteMember" ng-click="studentDelete(student.id)" title="Delete Student">
-                            <i class='fa fa-trash'></i>
+                            <i class="fa fa-trash"></i>
                         </a>
                     </td>
                 </tr>
             </table>
+
         </div>
     </div>
     <div class="row pt-3">

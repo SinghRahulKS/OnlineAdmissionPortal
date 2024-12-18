@@ -74,5 +74,21 @@ namespace OnlineAdmissionPortal.Services.Account
             return users;
 
         }
+
+        public User EditUser(User user)
+        {
+            DynamicParameters dbParams = new DynamicParameters();
+            dbParams.AddDynamicParams(new
+            {
+                @UserId = user.UserId,
+                @FirstName = user.FirstName,
+                @LastName = user.LastName,
+                @Email = user.Email,
+                @RoleName = user.RoleName,
+                @LastUpdaedBy = user.LastUpdatedBy
+            });
+            var userInfo = _dapperRepository.Update<User>(DBProcedures.procUpdateUserInfo, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            return userInfo;
+        }
     }
 }

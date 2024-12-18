@@ -24,7 +24,7 @@ namespace OnlineAdmissionPortal.Controllers
         { 
            var student = _mapper.Map<StudentInfo>(model);
            var resp = _studentService.GetStudents(student);
-           return View();
+            return Json(resp);
         }
         public IActionResult StudentDetails(int id)
         {
@@ -38,6 +38,7 @@ namespace OnlineAdmissionPortal.Controllers
         public IActionResult RegisterStudent(StudentModel model) 
         {
             var student = _mapper.Map<StudentInfo>(model);
+            student.CreatedBy = User.Identity?.Name;
             var resp = _studentService.RegisterStudent(student);
             return View();
         }

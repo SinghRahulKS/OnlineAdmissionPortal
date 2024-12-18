@@ -82,22 +82,18 @@ namespace OnlineAdmissionPortal.Controllers
         {
             return View();
         }
-
-        // POST: AccountController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit([FromBody] UserModel userDetails)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            
+             var user = _mapper.Map<User>(userDetails);
+             user.LastUpdatedBy = User.Identity?.Name;
+             var resp = _accountService.EditUser(user);
+            
+            return View("Users");
 
+        }
         // GET: AccountController/Delete/5
         public ActionResult Delete(int id)
         {

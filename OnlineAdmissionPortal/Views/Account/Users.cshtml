@@ -71,7 +71,7 @@
                         <button class="btn btn-outline-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editMember" ng-click="userEdit(user)" ng-show="user.userName != '@User.Identity?.Name'">
                             <i class="fa fa-edit"></i> Edit
                         </button>
-                        <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteMember" ng-click="userDelete(user.userId)" ng-show="user.userName != '@User.Identity?.Name'">
+                        <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteMember" ng-click="userDelete(user)" ng-show="user.userName != '@User.Identity?.Name'">
                             <i class="fa fa-trash"></i> Delete
                         </button>
                     </td>
@@ -108,18 +108,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form ng-submit="updateUser(userEditModel)">
+                <form ng-submit="updateUser(userDetails)">
                     <div class="mb-3">
                         <label for="editFirstName" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="editFirstName" ng-model="userEditModel.firstName" required>
+                        <input ng-model="userDetails.firstName" name="firstName" class="form-control" maxlength="20" ng-pattern="validationConstants.onlyText" required />
+                        <span class="text-danger" ng-if="editForm.firstName.$error.required"> First Name is Required! </span>
+                        <span class="text-danger" ng-if="editForm.firstName.$dirty&&editForm.firstName.$error.pattern">Please Enter Valid First Name</span>
                     </div>
                     <div class="mb-3">
                         <label for="editLastName" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="editLastName" ng-model="userEditModel.lastName" required>
+                        <input ng-model="userDetails.lastName" name="firstName" class="form-control" maxlength="20" ng-pattern="validationConstants.onlyText" required />
+                        <span class="text-danger" ng-if="editForm.lastName.$error.lastName"> First Name is Required! </span>
+                        <span class="text-danger" ng-if="editForm.lastName.$dirty&&editForm.lastName.$error.pattern">Please Enter Valid First Name</span>
                     </div>
                     <div class="mb-3">
                         <label for="editRole" class="form-label">Role</label>
-                        <select class="form-select" id="editRole" ng-model="userEditModel.roleName" required>
+                        <select class="form-select" id="editRole" ng-model="userDetails.roleName" required>
                             <option value="" disabled>Select Role</option>
                             @foreach (var item in Html.GetEnumSelectList<Role>())
                             {
@@ -143,15 +147,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete <strong ng-bind="userToDelete.firstName + ' ' + userToDelete.lastName"></strong>?</p>
+                <p>Are you sure you want to delete <strong ng-bind="resUser.firstName + ' ' + resUser.lastName"></strong>?</p>
                 <p class="text-danger">This action cannot be undone.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" ng-click="deleteUser(userToDelete.userId)" data-bs-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-danger" ng-click="deleteUser(resUser.userId)" data-bs-dismiss="modal">Delete</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

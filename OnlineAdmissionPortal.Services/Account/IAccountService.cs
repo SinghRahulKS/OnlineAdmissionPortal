@@ -11,5 +11,6 @@ namespace OnlineAdmissionPortal.Services.Account
     {
         public List<User> GetUsers(User user);
         public User GetUserDetail(Guid id);
+        public User EditUser(User user);
     }
 }

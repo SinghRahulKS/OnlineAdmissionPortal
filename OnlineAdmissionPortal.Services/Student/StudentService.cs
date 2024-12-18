@@ -3,6 +3,7 @@ using DataContext.Repository.Dapper;
 using Entity.Common;
 using Entity.Student;
 using Entity.User;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,10 +36,9 @@ namespace OnlineAdmissionPortal.Services.Student
             {
                 @FirstName = student.FName,
                 @LastName = student.LName,
-                @Email = student.Email,
-                @PhoneNo = student.Phone
+                @Email = student.Email
             });
-            studentInfos = _dapperRepository.GetAll<StudentInfo>(DBProcedures.procGetAspNetUsers, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            studentInfos = _dapperRepository.GetAll<StudentInfo>(DBProcedures.procGetAllStudents, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
             return studentInfos;
 
         }
@@ -54,9 +54,10 @@ namespace OnlineAdmissionPortal.Services.Student
                 @Email = student.Email,
                 @PhoneNo = student.Phone,
                 @DateOfBirth = student.DateOfBirth,
-                @Address = student.Address
+                @Address = student.Address,
+                @SavedBy = student.CreatedBy
             });
-            resp = _dapperRepository.Insert<BoolResponse>(DBProcedures.procGetAspNetUsers, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            resp = _dapperRepository.Insert<BoolResponse>(DBProcedures.procInsertStudentInfo, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
             return resp;
         }
     }

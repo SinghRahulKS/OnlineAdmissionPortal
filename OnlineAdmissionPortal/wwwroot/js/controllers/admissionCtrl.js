@@ -73,7 +73,7 @@ app.controller("admissionCtrl", ['$scope', 'admissionData', function ($scope, ad
             $("#successMsg").modal("show");
         }
         $scope.getStudents($scope.studentFilter);
-    }
+    };
 
 
 }]);
