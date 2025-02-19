@@ -17,7 +17,9 @@ namespace Entity.Common
         public const string procDeleteUser = "procDeleteUser";
         public const string procUpdateUserInfo = "procUpdateUserInfo";
         public const string procGetUserDetail = "procGetUserDetail";
-        public const string procGetAllStudents = "procGetAllStudents";
-        public const string procInsertStudentInfo = "procInsertStudentInfo";
+        public const string procGetAllStudents = "procGetStudents";
+        public const string procInsertStudentInfo = "procInsertStudent_20250216";
+        public const string procGetAllInstitute = "procGetAllInstitutes";
+        public const string procInsertInstitute = "procInsertInstitute";
     }
 }

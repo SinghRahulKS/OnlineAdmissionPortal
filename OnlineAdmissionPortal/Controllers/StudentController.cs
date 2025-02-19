@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Entity.Student;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineAdmissionPortal.Models;
 using OnlineAdmissionPortal.Services.Student;
 
 namespace OnlineAdmissionPortal.Controllers
 {
+    //[Authorize]
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;

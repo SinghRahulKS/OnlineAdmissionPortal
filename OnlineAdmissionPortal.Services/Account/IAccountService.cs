@@ -1,4 +1,5 @@
-﻿using Entity.User;
+﻿using Entity.Common;
+using Entity.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace OnlineAdmissionPortal.Services.Account
         public List<User> GetUsers(User user);
         public User GetUserDetail(Guid id);
         public User EditUser(User user);
+        BoolResponse DeleteUser(Guid userId);
     }
 }

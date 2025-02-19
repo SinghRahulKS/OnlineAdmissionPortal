@@ -82,37 +82,25 @@ namespace OnlineAdmissionPortal.Controllers
         {
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([FromBody] UserModel userDetails)
+        [HttpPut]
+        public JsonResult Edit([FromBody] UserModel userDetails)
         {
-            
-             var user = _mapper.Map<User>(userDetails);
-             user.LastUpdatedBy = User.Identity?.Name;
-             var resp = _accountService.EditUser(user);
-            
-            return View("Users");
-
+            if (userDetails == null)
+                return Json(new { success = false, message = "Invalid user data" });
+            var user = _mapper.Map<User>(userDetails);
+            user.LastUpdatedBy = User.Identity?.Name;
+            var resp = _accountService.EditUser(user);
+            return Json(new { success = true, message = "User updated successfully" });
         }
+
         // GET: AccountController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpDelete]
+        public ActionResult Delete([FromQuery] Guid userId)
         {
-            return View();
+            var res = _accountService.DeleteUser(userId);
+            return Json(res);
         }
 
-        // POST: AccountController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+
     }
 }

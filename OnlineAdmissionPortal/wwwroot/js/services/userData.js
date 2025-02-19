@@ -8,12 +8,24 @@
             });
         },
         deleteUser: function (userId) {
-            return $http.post('/Account/DeleteUser/' + userId);
+            return $http.delete('/Account/Delete', { params: { userId: userId } })
+                .then(function (response) {
+                    return response;
+                }).catch(function (error) {
+                    console.error("Delete request failed:", error);
+                });
         },
+
         updateUser: function (userDetails) {
-            return $http.post('/Account/UpdateUser/', userDetails).then(function (data) {
-                return data
-            });
+            return $http.put('/Account/Edit/', userDetails)
+                .then(function (response) {
+                    return response;
+                })
+                .catch(function (error) {
+                    console.error("Error updating user:", error);
+                    return Promise.reject(error);
+                });
         }
+
     }; return service;
 }]);

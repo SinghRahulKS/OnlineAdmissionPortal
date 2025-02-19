@@ -1,4 +1,5 @@
-﻿using Entity.Common;
+﻿using Entity.Admission;
+using Entity.Common;
 using Entity.Student;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace OnlineAdmissionPortal.Services.Student
         public List<StudentInfo> GetStudents(StudentInfo student);
         public StudentInfo GetStudentDetails(int id);
         public BoolResponse RegisterStudent(StudentInfo student);
+        public BoolResponse TakeAdmission(Admission admission);
     }
 }

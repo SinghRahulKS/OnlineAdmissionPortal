@@ -90,5 +90,23 @@ namespace OnlineAdmissionPortal.Services.Account
             var userInfo = _dapperRepository.Update<User>(DBProcedures.procUpdateUserInfo, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
             return userInfo;
         }
+
+        public BoolResponse DeleteUser(Guid userId)
+        { 
+            var resp = new BoolResponse();
+            DynamicParameters dbParams = new DynamicParameters();
+            dbParams.AddDynamicParams(
+            new
+            {
+                @Id = userId
+            });
+            var dbResponse = _dapperRepository.Update<BoolResponse>(DBProcedures.procDeleteUser, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            if (dbResponse != null)
+            {
+                resp.IsValid = dbResponse.IsValid;
+                resp.Message = dbResponse.Message;
+            }
+            return resp;
+        }
     }
 }

@@ -119,6 +119,13 @@ namespace OnlineAdmissionPortal.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "User does not exist.");
                     return Page();
                 }
+                var isPasswordValid = await _userManager.CheckPasswordAsync(user, Input.Password);
+                if (!isPasswordValid)
+                {
+                    ModelState.AddModelError(string.Empty, "Incorrect password.");
+                    return Page();
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
@@ -127,7 +134,7 @@ namespace OnlineAdmissionPortal.Areas.Identity.Pages.Account
                     var claimsIdentity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
                     claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
                     claimsIdentity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName + " " + user.LastName));
-                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName));
                     claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, user.RoleName));
                     await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
                         new ClaimsPrincipal(claimsIdentity));

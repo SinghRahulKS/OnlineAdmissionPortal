@@ -42,7 +42,12 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
     $scope.deleteUser = function (userId) {
         userData.deleteUser(userId).then(function (result) {
             $scope.data = result.data;
-            $scope.message = $scope.data.message;
+            if(!result.data.isValid)
+            {
+                alert(result.data.message);
+                return;
+            }
+            alert = $scope.data.message;
             $scope.isValid = result.data.isValid;
             $("#deleteMember").modal("hide");
             $scope.modalPopup();
@@ -55,7 +60,6 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
         $("#editMember").modal("show");
     };
 
-    //update user details
     $scope.updateUser = function (userDetails) {
         $scope.selectedUser = userDetails;
         userData.updateUser($scope.selectedUser).then(function (result) {
@@ -64,8 +68,12 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
             $scope.message = $scope.data.message;
             $scope.isValid = result.data.isValid;
             $scope.modalPopup();
+        }).catch(function (error) {
+            console.error("Update failed:", error);
+            alert("Failed to update user. Please check the data.");
         });
     };
+
 
     //success message popup
     $scope.modalPopup = function () {

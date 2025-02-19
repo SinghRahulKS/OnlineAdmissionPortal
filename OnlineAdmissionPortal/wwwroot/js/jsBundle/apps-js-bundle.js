@@ -44880,7 +44880,12 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
     $scope.deleteUser = function (userId) {
         userData.deleteUser(userId).then(function (result) {
             $scope.data = result.data;
-            $scope.message = $scope.data.message;
+            if(!result.data.isValid)
+            {
+                alert(result.data.message);
+                return;
+            }
+            alert = $scope.data.message;
             $scope.isValid = result.data.isValid;
             $("#deleteMember").modal("hide");
             $scope.modalPopup();
@@ -44893,7 +44898,6 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
         $("#editMember").modal("show");
     };
 
-    //update user details
     $scope.updateUser = function (userDetails) {
         $scope.selectedUser = userDetails;
         userData.updateUser($scope.selectedUser).then(function (result) {
@@ -44902,8 +44906,12 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
             $scope.message = $scope.data.message;
             $scope.isValid = result.data.isValid;
             $scope.modalPopup();
+        }).catch(function (error) {
+            console.error("Update failed:", error);
+            alert("Failed to update user. Please check the data.");
         });
     };
+
 
     //success message popup
     $scope.modalPopup = function () {
@@ -44917,81 +44925,135 @@ app.controller("userCtrl", ['$scope', 'userData', function ($scope, userData) {
 
 angular.module('pageApp', ['bw.paging']);
 angular.module('app').requires.push('pageApp');
+
 app.controller("admissionCtrl", ['$scope', 'admissionData', function ($scope, admissionData) {
 
     $scope.selectedStudent = {};
-    $scope.studentFilter = {};;
+    $scope.studentFilter = {};
+    $scope.selectedInstitute = {};
+    $scope.instituteFilter = {};
 
-    //Getting studens
+    /*** STUDENT METHODS ***/
+
+    // Students को प्राप्त करने का method
     $scope.getStudents = function (filter) {
         admissionData.getStudents(filter).then(function (resp) {
             $scope.studentList = resp.data;
             if (resp.data && resp.data.length > 0) {
-                $scope.pageSize = resp.data[0].pageSize;
-                $scope.currentPage = resp.data[0].currentPage;
-                $scope.page = resp.data[0].currentPage;
-                $scope.total = resp.data[0].totalRecord;
-                $scope.totalRecord = resp.data[0].totalRecord;
-
+                let data = resp.data[0];
+                $scope.pageSize = data.pageSize;
+                $scope.currentPage = data.currentPage;
+                $scope.page = data.currentPage;
+                $scope.totalRecord = data.totalRecord;
             } else {
-                $scope.totalStudents = 0;
                 $scope.totalRecord = 0;
             }
-        })
+        });
     };
 
-    //clear filter 
-    $scope.clearFilter = function (filter) {
+    // Filter को साफ़ करने का method
+    $scope.clearStudentFilter = function () {
         $scope.selectedStudent = {};
-        $scope.studentFilter.currentPage = filter.currentPage;
-        $scope.studentFilter.pageSize = filter.pageSize;
+        $scope.studentFilter = {}; // Reset filters
         $scope.getStudents($scope.studentFilter);
     };
 
-    //Selecting studen details for deleting records
-    $scope.studentDelete = function (studenId) {
+    // Student डिलीट करने के लिए ID सेट करना
+    $scope.studentDelete = function (studentId) {
         $("#deleteMember").modal("show");
-        $scope.studenId = studenId;
+        $scope.studentId = studentId;
     };
 
-    //Deleting studen
+    // Student को डिलीट करने का method
     $scope.deleteStudent = function () {
-        admissionData.deleteStuden($scope.id).then(function (result) {
-            $scope.data = result.data;
-            $scope.message = $scope.data.message;
+        admissionData.deleteStudent($scope.studentId).then(function (result) {
+            $scope.message = result.data.message;
             $scope.isValid = result.data.isValid;
             $("#deleteMember").modal("hide");
             $scope.modalPopup();
         });
     };
 
-    //Selecting studen details for editing records
-    $scope.studenEdit = function (item) {
-        $scope.studenDetails = {};
-        angular.extend($scope.studenDetails, item);
+    // Student को एडिट करने के लिए डिटेल्स सेट करना
+    $scope.studentEdit = function (item) {
+        $scope.studentDetails = angular.copy(item);
         $("#editMember").modal("show");
     };
 
-    //update studen details
-    $scope.updateStudent = function (studenDetails) {
-        $scope.selectedStudent = studenDetails;
-        admissionData.updateStudent($scope.selectedStudent).then(function (result) {
+    // Student को अपडेट करने का method
+    $scope.updateStudent = function (studentDetails) {
+        admissionData.updateStudent(studentDetails).then(function (result) {
             $("#editMember").modal("hide");
-            $scope.data = result.data;
-            $scope.message = $scope.data.message;
+            $scope.message = result.data.message;
             $scope.isValid = result.data.isValid;
             $scope.modalPopup();
         });
     };
 
-    //success message popup
+    /*** INSTITUTE METHODS ***/
+
+    // Institutes को प्राप्त करने का method
+    $scope.getInstitutes = function (filter) {
+        admissionData.getInstitutes(filter).then(function (resp) {
+            $scope.instituteList = resp.data;
+            if (resp.data && resp.data.length > 0) {
+                let data = resp.data[0];
+                $scope.institutePageSize = data.pageSize;
+                $scope.instituteCurrentPage = data.currentPage;
+                $scope.instituteTotalRecord = data.totalRecord;
+            } else {
+                $scope.instituteTotalRecord = 0;
+            }
+        });
+    };
+
+    // Filter को साफ़ करने का method
+    $scope.clearInstituteFilter = function () {
+        $scope.selectedInstitute = {};
+        $scope.instituteFilter = {}; // Reset filters
+        $scope.getInstitutes($scope.instituteFilter);
+    };
+
+    // Institute डिलीट करने के लिए ID सेट करना
+    $scope.instituteDelete = function (instituteId) {
+        $("#deleteInstitute").modal("show");
+        $scope.instituteId = instituteId;
+    };
+
+    // Institute को डिलीट करने का method
+    $scope.deleteInstitute = function () {
+        admissionData.deleteInstitute($scope.instituteId).then(function (result) {
+            $scope.message = result.data.message;
+            $scope.isValid = result.data.isValid;
+            $("#deleteInstitute").modal("hide");
+            $scope.modalPopup();
+        });
+    };
+
+    // Institute को एडिट करने के लिए डिटेल्स सेट करना
+    $scope.instituteEdit = function (item) {
+        $scope.instituteDetails = angular.copy(item);
+        $("#editInstitute").modal("show");
+    };
+
+    // Institute को अपडेट करने का method
+    $scope.updateInstitute = function (instituteDetails) {
+        admissionData.updateInstitute(instituteDetails).then(function (result) {
+            $("#editInstitute").modal("hide");
+            $scope.message = result.data.message;
+            $scope.isValid = result.data.isValid;
+            $scope.modalPopup();
+        });
+    };
+
+    // Success message popup दिखाने का method
     $scope.modalPopup = function () {
-        if ($scope.message !== undefined) {
+        if ($scope.message) {
             $("#successMsg").modal("show");
         }
         $scope.getStudents($scope.studentFilter);
+        $scope.getInstitutes($scope.instituteFilter);
     };
-
 
 }]);
 
@@ -45543,36 +45605,86 @@ app.factory('userData', ['$http', function ($http) {
             });
         },
         deleteUser: function (userId) {
-            return $http.post('/Account/DeleteUser/' + userId);
+            return $http.delete('/Account/Delete', { params: { userId: userId } })
+                .then(function (response) {
+                    return response;
+                }).catch(function (error) {
+                    console.error("Delete request failed:", error);
+                });
         },
+
         updateUser: function (userDetails) {
-            return $http.post('/Account/UpdateUser/', userDetails).then(function (data) {
-                return data
-            });
+            return $http.put('/Account/Edit/', userDetails)
+                .then(function (response) {
+                    return response;
+                })
+                .catch(function (error) {
+                    console.error("Error updating user:", error);
+                    return Promise.reject(error);
+                });
         }
+
     }; return service;
 }]);
 app.factory('admissionData', ['$http', function ($http) {
-    var service =
-    {
+    var service = {
 
+        /*** STUDENT METHODS ***/
+
+        // सभी Students को प्राप्त करने का API Call
         getStudents: function (model) {
             return $http.post('/Student/GetStudents/', model).then(function (data) {
                 return data;
             });
         },
+
+        // Student को डिलीट करने का API Call
         deleteStudent: function (id) {
             return $http.post('/Student/Delete/' + id);
         },
-        updateStudent: function (studenDetails) {
-            return $http.post('/Student/Update/', studenDetails).then(function (data) {
-                return data
+
+        // Student को अपडेट करने का API Call
+        updateStudent: function (studentDetails) {
+            return $http.post('/Student/Update/', studentDetails).then(function (data) {
+                return data;
             });
         },
-        registerStudent: function (studenDetails) {
-            return $http.post('/Student/RegisterStudent/', studenDetails).then(function (data) {
-                return data
+
+        // नया Student रजिस्टर करने का API Call
+        registerStudent: function (studentDetails) {
+            return $http.post('/Student/RegisterStudent/', studentDetails).then(function (data) {
+                return data;
+            });
+        },
+
+        /*** INSTITUTE METHODS ***/
+
+        // सभी Institutes को प्राप्त करने का API Call
+        getInstitutes: function (model) {
+            return $http.post('/Institution/GetAll/', model).then(function (data) {
+                return data;
+            });
+        },
+
+        // Institute को डिलीट करने का API Call
+        deleteInstitute: function (id) {
+            return $http.post('/Institute/Delete/' + id);
+        },
+
+        // Institute को अपडेट करने का API Call
+        updateInstitute: function (instituteDetails) {
+            return $http.post('/Institute/Update/', instituteDetails).then(function (data) {
+                return data;
+            });
+        },
+
+        // नया Institute जोड़ने का API Call
+        registerInstitute: function (instituteDetails) {
+            return $http.post('/Institute/RegisterInstitute/', instituteDetails).then(function (data) {
+                return data;
             });
         }
-    }; return service;
+    };
+
+    return service;
 }]);

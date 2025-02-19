@@ -10,15 +10,15 @@ namespace Entity.Enums
     {
         public enum Role
         {
-            User,
-            Admin,
-            SuperAdmin
+            User = 1,
+            Admin = 2,
+            SuperAdmin = 3
         }
         public enum InstituteType
         {
-            School,
-            College,
-            University
+            School = 1,
+            College = 2,
+            University = 3
         }
 
     }
