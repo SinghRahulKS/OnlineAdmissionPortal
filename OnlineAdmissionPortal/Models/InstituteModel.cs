@@ -9,7 +9,7 @@
         public string? MobileNumber { get; set; }        
         public string? WebsiteUrl { get; set; }                 
         public string? Email { get; set; }
-        public DateOnly EstablishedYear { get; set; }
+        public DateTime EstablishedYear { get; set; }
     }
 
 }

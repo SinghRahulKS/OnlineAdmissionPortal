@@ -7,8 +7,8 @@
             <p class="text-primary" ng-click="getStudents(student)"><i class="fa-solid fa-user"></i> Students</p>
         </div>
         <div class="col-6 d-flex justify-content-end">
-            <a asp-area="Identity" asp-page="/Student/Register" class="text-decoration-none">
-                <i class="fa-solid fa-user-plus"></i>  Add Student
+            <a asp-controller="Student" asp-action="Create" class="text-decoration-none">
+                <i class="fa-solid fa-user-plus"></i> Add Student
             </a>
         </div>
     </div>

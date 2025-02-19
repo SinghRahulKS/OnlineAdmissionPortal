@@ -36,7 +36,8 @@ namespace OnlineAdmissionPortal.Services.Student
             {
                 @FirstName = student.FName,
                 @LastName = student.LName,
-                @Email = student.Email
+                @Email = student.Email,
+                @PhoneNo = student.Phone
             });
             studentInfos = _dapperRepository.GetAll<StudentInfo>(DBProcedures.procGetAllStudents, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
             return studentInfos;
@@ -53,9 +54,9 @@ namespace OnlineAdmissionPortal.Services.Student
                 @LastName = student.LName,
                 @Email = student.Email,
                 @PhoneNo = student.Phone,
-                @DateOfBirth = student.DateOfBirth,
                 @Address = student.Address,
-                @SavedBy = student.CreatedBy
+                @DateOfBirth = student.DateOfBirth,
+                @CreatedBy = student.CreatedBy
             });
             resp = _dapperRepository.Insert<BoolResponse>(DBProcedures.procInsertStudentInfo, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
             return resp;

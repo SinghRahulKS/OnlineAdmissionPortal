@@ -1,72 +1,85 @@
 ﻿@model IEnumerable<OnlineAdmissionPortal.Models.InstituteModel>
+@inject IConfiguration _config
 
-@{
-    ViewData["Title"] = "GetAll";
-}
+<div class="container my-4" ng-controller="admissionCtrl">
+    <div class="row pt-4">
+        <div class="col-6 d-flex">
+            <p class="text-primary" ng-click="getInstitutes(instituteFilter)">
+                <i class="fa-solid fa-school"></i> Institutes
+            </p>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <a asp-controller="Institution" asp-action="Create" class="text-decoration-none">
+                <i class="fa-solid fa-plus"></i> Add Institute
+            </a>
+        </div>
+    </div>
 
-<h1>GetAll</h1>
+    <div class="border bg-white">
+        <br />
+        <div class="col-12" ng-init="instituteFilter.currentPage=1; instituteFilter.pageSize=@_config["Pagination:PageSize"]; getInstitutes(instituteFilter)">
+            <div class="col-12 card-box border p-2 p-sm-3 mb-2">
+                <form class="row" ng-submit="instituteFilter.currentPage=1; getInstitutes(instituteFilter)">
+                    <div class="col col-xs-12">
+                        @Html.TextBox("Name", "", new { @placeholder = "Search Institute Name", @ng_model = "instituteFilter.Name", @class = "form-control no-radius", @ng_keyup = "instituteFilter.currentPage=1; getInstitutes(instituteFilter)" })
+                    </div>
+                    <div class="col col-xs-12">
+                        <a class="btn btn-primary" ng-click="instituteFilter.currentPage=1; getInstitutes(instituteFilter)">
+                            <i class="fa-solid fa-magnifying-glass"></i> Search
+                        </a>
+                    </div>
+                    <div class="col col-xs-12">
+                        <a class="btn btn-outline-danger" ng-click="instituteFilter.currentPage=1; clearFilter(instituteFilter)" title="Clear Filter">
+                            <i class="fa-solid fa-xmark"></i> Clear
+                        </a>
+                    </div>
+                </form>
+            </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InstituteType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MobileNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WebsiteUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstablishedYear)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InstituteType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MobileNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WebsiteUrl)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EstablishedYear)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <!-- 🏫 Table with all fields from the model -->
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>@Html.DisplayNameFor(m => m.Name)</th>
+                    <th>@Html.DisplayNameFor(m => m.InstituteType)</th>
+                    <th>@Html.DisplayNameFor(m => m.Address)</th>
+                    <th>@Html.DisplayNameFor(m => m.MobileNumber)</th>
+                    <th>@Html.DisplayNameFor(m => m.WebsiteUrl)</th>
+                    <th>@Html.DisplayNameFor(m => m.Email)</th>
+                    <th>@Html.DisplayNameFor(m => m.EstablishedYear)</th>
+                    <th>Action</th>
+                </tr>
+                <tr ng-repeat="institute in instituteList track by $index">
+                    <td ng-bind="institute.name"></td>
+                    <td ng-bind="institute.instituteType"></td>
+                    <td ng-bind="institute.address"></td>
+                    <td ng-bind="institute.mobileNumber"></td>
+                    <td ng-bind="institute.websiteUrl"></td>
+                    <td ng-bind="institute.email"></td>
+                    <td ng-bind="institute.establishedYear"></td>
+                    <td>
+                        <a class="text-success" ng-click="editInstitute(institute)" title="Edit Institute">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="text-danger" ng-click="deleteInstitute(institute.id)" title="Delete Institute">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row pt-3">
+        <div class="col-12 d-flex justify-content-evenly">
+            <div paging
+                 page="page"
+                 page-size="pageSize"
+                 total="total"
+                 text-next="next"
+                 text-prev="prev"
+                 show-prev-next="true"
+                 paging-action="instituteFilter.currentPage=page; getInstitutes(instituteFilter);">
+            </div>
+        </div>
+    </div>
+</div>

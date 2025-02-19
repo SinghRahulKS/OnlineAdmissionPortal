@@ -22,14 +22,19 @@ namespace OnlineAdmissionPortal.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            List<InstituteModel> institutes = new List<InstituteModel>();
+            var institute = new Institute();
+            var result = _institutionService.GetInstituteList(institute);
+            var resp = _mapper.Map<List<InstituteModel>>(result);
+            return View(resp);
         }
         public IActionResult GetAll(InstituteModel model)
         { 
             List<InstituteModel> institutes = new List<InstituteModel>();
-            var res = _mapper.Map<Institute>(model);
-            var result = _institutionService.GetInstituteList(res);
-            return View();
+            var institute = _mapper.Map<Institute>(model);
+            var result = _institutionService.GetInstituteList(institute);
+            var resp = _mapper.Map<List<InstituteModel>>(result);
+            return Json(resp);
         }
         [HttpGet]
         public IActionResult Create()
@@ -43,7 +48,7 @@ namespace OnlineAdmissionPortal.Controllers
             var institute = _mapper.Map<Institute>(model);
             resp = _institutionService.RegisterInstitute(institute);
             var res = _mapper.Map<BoolResponseModel>(resp);
-            return View(res);
+            return RedirectToAction("GetAll");
         }
     }
 }
