@@ -65,7 +65,18 @@ namespace OnlineAdmissionPortal.Services.Student
 
         public BoolResponse TakeAdmission(Admission admission)
         {
-            throw new NotImplementedException();
+            var resp = new BoolResponse();
+            DynamicParameters dbParams = new DynamicParameters();
+            dbParams.AddDynamicParams(new
+            {
+                @StudentName = admission.StudentName,
+                @InstituteName = admission.InstituteName,   
+                @InstituteType = admission.InstituteType,
+                @Email = admission.Email,
+                @PhoneNo = admission.Phone
+            });
+            resp = _dapperRepository.Insert<BoolResponse>(DBProcedures.procInsertStudentInfo, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+            return resp;
         }
     }
 }
