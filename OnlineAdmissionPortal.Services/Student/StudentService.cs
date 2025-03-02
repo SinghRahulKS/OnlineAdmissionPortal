@@ -70,13 +70,24 @@ namespace OnlineAdmissionPortal.Services.Student
             dbParams.AddDynamicParams(new
             {
                 @StudentName = admission.StudentName,
-                @InstituteName = admission.InstituteName,   
-                @InstituteType = admission.InstituteType,
+                @StudentId = admission.StudentId,
+                @Cource = admission.Cource,
                 @Email = admission.Email,
-                @PhoneNo = admission.Phone
+                @Phone = admission.Phone,
+                @InstituteName = admission.InstituteName,
+                @InstituteType = admission.InstituteType.GetHashCode(),
+                @CreatedBy = admission.CreatedBy
             });
-            resp = _dapperRepository.Insert<BoolResponse>(DBProcedures.procInsertStudentInfo, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+
+            resp = _dapperRepository.Insert<BoolResponse>(DBProcedures.procInsertAdmission, dbParams, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
+
             return resp;
+        }
+
+        public List<Admission> GetAllAdmissions()
+        {
+            DynamicParameters dynamicParameters = new DynamicParameters();
+            return _dapperRepository.GetAll<Admission>(DBProcedures.procGetAllAdmissions, dynamicParameters, OnlineAdmissionPortalConstants.DB_OnlineAdmissionPortal);
         }
     }
 }

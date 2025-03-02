@@ -13,17 +13,19 @@ namespace OnlineAdmissionPortal.Controllers
         public AdmissionController(IStudentService studentService, IMapper mapper)
         {
             _studentService = studentService;
-            _mapper = mapper;
+            _mapper = mapper; 
         }
-        public IActionResult Index()
+        public IActionResult Index() 
         {
-            return View();
+            var res = _studentService.GetAllAdmissions();
+            var admissions = _mapper.Map<List<AdmissionModel>>(res);
+            return View(admissions);
         }
-        public IActionResult TakeAdmission(AdmissionModel model)
+        public JsonResult TakeAdmission(AdmissionModel model)
         {
             var admission = _mapper.Map<Admission>(model);
             var res = _studentService.TakeAdmission(admission);
-            return View();
+            return Json(res);
         }
     }
 }

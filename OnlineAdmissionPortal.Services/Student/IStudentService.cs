@@ -15,5 +15,6 @@ namespace OnlineAdmissionPortal.Services.Student
         public StudentInfo GetStudentDetails(int id);
         public BoolResponse RegisterStudent(StudentInfo student);
         public BoolResponse TakeAdmission(Admission admission);
+        List<Admission> GetAllAdmissions();
     }
 }

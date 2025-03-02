@@ -21,5 +21,7 @@ namespace Entity.Common
         public const string procInsertStudentInfo = "procInsertStudent_20250216";
         public const string procGetAllInstitute = "procGetAllInstitutes";
         public const string procInsertInstitute = "procInsertInstitute";
+        public const string procInsertAdmission = "InsertAdmission";
+        public const string procGetAllAdmissions = "GetAllAdmissions";
     }
 }

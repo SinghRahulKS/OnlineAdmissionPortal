@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entity.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using static Entity.Enums.Enum;
 
 namespace Entity.Admission
 {
-    public class Admission
+    public class Admission : BaseEntity
     {
         public int Id { get; set; }
         public string StudentName { get; set; }
