@@ -7,8 +7,18 @@ app.controller("admissionCtrl", ['$scope', 'admissionData', function ($scope, ad
     $scope.studentFilter = {};
     $scope.selectedInstitute = {};
     $scope.instituteFilter = {};
+    $scope.institutes = []; 
 
-    /*** STUDENT METHODS ***/
+    // Open Modal with Selected Student
+    $scope.openAdmissionModal = function (student) {
+        $scope.selectedStudent = angular.copy(student); // Copy data to avoid binding issues
+        $("#admissionModal").modal("show"); // Show modal
+    };
+    $scope.getInstitutesName = function () {
+        admissionData.getInstitutesName.then(function (response) {
+            $scope.institutes = response.data; // Populate dropdown
+        });
+    };
 
     // Students को प्राप्त करने का method
     $scope.getStudents = function (filter) {

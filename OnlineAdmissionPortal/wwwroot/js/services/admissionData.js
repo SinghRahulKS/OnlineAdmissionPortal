@@ -37,6 +37,11 @@
                 return data;
             });
         },
+        getInstitutesName: function () {
+            return $http.get('/Institution/GetInstitutesName/').then(function (data) {
+                return data;
+            });
+        },
 
         // Institute को डिलीट करने का API Call
         deleteInstitute: function (id) {

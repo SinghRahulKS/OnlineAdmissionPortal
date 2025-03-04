@@ -38,6 +38,16 @@ namespace OnlineAdmissionPortal.Controllers
             var resp = _mapper.Map<List<InstituteModel>>(result);
             return Json(resp);
         }
+        public IActionResult GetInstitutesName()
+        {   var model = new InstituteModel();
+            List<InstituteModel> institutes = new List<InstituteModel>();
+            var institute = _mapper.Map<Institute>(model);
+            var result = _institutionService.GetInstituteList(institute);
+            List<string> strings = new List<string>();
+            foreach ( var item in result)
+                strings.Add(item.Name);
+            return Json(strings);
+        }
         [HttpGet]
         public IActionResult Create()
         {

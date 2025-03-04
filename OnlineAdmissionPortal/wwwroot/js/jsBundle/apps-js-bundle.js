@@ -44932,8 +44932,18 @@ app.controller("admissionCtrl", ['$scope', 'admissionData', function ($scope, ad
     $scope.studentFilter = {};
     $scope.selectedInstitute = {};
     $scope.instituteFilter = {};
+    $scope.institutes = []; 
 
-    /*** STUDENT METHODS ***/
+    // Open Modal with Selected Student
+    $scope.openAdmissionModal = function (student) {
+        $scope.selectedStudent = angular.copy(student); // Copy data to avoid binding issues
+        $("#admissionModal").modal("show"); // Show modal
+    };
+    $scope.getInstitutesName = function () {
+        admissionData.getInstitutesName.then(function (response) {
+            $scope.institutes = response.data; // Populate dropdown
+        });
+    };
 
     // Students को प्राप्त करने का method
     $scope.getStudents = function (filter) {
@@ -45662,6 +45672,11 @@ app.factory('admissionData', ['$http', function ($http) {
         // सभी Institutes को प्राप्त करने का API Call
         getInstitutes: function (model) {
             return $http.post('/Institution/GetAll/', model).then(function (data) {
+                return data;
+            });
+        },
+        getInstitutesName: function () {
+            return $http.get('/Institution/GetInstitutesName/').then(function (data) {
                 return data;
             });
         },
